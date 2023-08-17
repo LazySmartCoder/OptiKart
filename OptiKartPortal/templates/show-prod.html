@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}
+Blogs | OptiKart
+{% endblock %}
+{% block body %}
+{% load static %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<section class="shop_section layout_padding">
+    <center>
+        <div style="max-width: 800px;">
+            <h1>{{name}}</h1>
+        <hr>
+        <img src="http://localhost:8000/static/ProdImages/{{image}}" alt="">
+        <br><br>
+        {% for i in rating %}
+        <i class="fa fa-star" aria-hidden="true"></i>
+        {% endfor %}
+        <br><br>
+        <h5 style="text-align: left;">Price: ₹{{price}}</h5>
+        <h5 style="text-align: left;">Seller: {{seller}}</h5>
+        <br><br>
+        <h4 style="text-align: left;">Description:</h4>
+        <p style="text-align: left;">{{desc}}</p>
+        <br>
+        <form action="/rating/{{name}}" style="text-align: left;">
+            <h4><input type="number" style="border-radius: 10px; max-width: 100px;" name="rating"> / 5 Stars <button style="color: purple; border-radius: 5px; background-color: white;">Rate</button></h4>
+        </form>
+        <a href="/add-cart/{{name}}"><button class="btn btn-outline-success">Add to Cart <i class="fa fa-shopping-cart"></i></button></a>
+        </div>
+
+    </center>
+        </section>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+{% endblock %}

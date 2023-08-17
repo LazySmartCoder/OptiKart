@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+Blogs | OptiKart
+{% endblock %}
+{% block body %}
+{% load static %}
+
+<section class="blog_section layout_padding">
+                <center>
+                    <div style="max-width: 1000px;">
+                        <h1>{{name}}</h1>
+                        <hr>
+                        <img src="http://localhost:8000/static/BlogImages/{{image}}" alt="">
+                        <br><br>
+                        <h5>Date Published: {{date}} | Views: {{views}}</h5>
+                        <br><br>
+                        <div style="align-items: left; text-align: left;">
+                        {{post|safe}}
+                        </div>
+                        </div>
+                </center>
+</section>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}
+Blogs | OptiKart
+{% endblock %}
+{% block body %}
+{% load static %}
+
+
+  <section class="shop_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          All Your Eyewear Needs!!
+        </h2>
+      </div>
+      <div class="row">
+        
+        {% for p in prods|slice:"::1" %}
+        <a href="/show-product/{{p.Name}}">
+          <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="box">
+            <div>
+              <div class="img-box">
+                <img src="http://localhost:8000/static/ProdImages/{{p.Image}}" alt="">
+              </div>
+              <div class="detail-box">
+                <a href="/show-product/{{p.Name}}">
+                  {{p.Name}}
+                </a>
+                <h6>
+                  {% for i in p.Rating|rjust:p.Rating %}
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  {% endfor %}
+                </h6>
+                <h6>
+                  ₹{{p.Price}}
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        </a>
+        {% endfor %}
+
+      </div>
+  </section>
+
+{% endblock %}

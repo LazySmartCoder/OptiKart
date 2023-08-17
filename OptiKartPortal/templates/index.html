@@ -1,0 +1,361 @@
+{% extends "base.html" %}
+{% block title %}
+OptiKart
+{% endblock %}
+{% block body %}
+{% load static %}
+
+
+
+<body>
+
+
+  <!-- slider section -->
+  <section class="slider_section position-relative">
+    <div class="container-fluid" >
+      <div class="row">
+        <div class="col-md-6 mx-auto detail_container" >
+          <div class="detail-box">
+            {% if request.user.is_authenticated %}
+            <h1>
+              Welcome back
+              <br> {{request.user.first_name}}
+            </h1>
+            {% else %}
+            <h1>
+              Best Glasses
+              <br> Collection
+            </h1>
+            {% endif %}
+            <p>
+              It is a long established fact that a reader will be distracted by the readable content of a page when
+              looking at its layout. The point of using Lorem
+            </p>
+            <div>
+              <a href="" class="slider-link">
+                Explore
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 px-0">
+          <div id="customCarousel1" class="carousel  slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="slider_img_box">
+                  <img src="{% static 'Images/slider-bg.jpg' %}" alt="">
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="slider_img_box">
+                  <img src="{% static 'Images/slider-bg.jpg' %}" alt="">
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="slider_img_box">
+                  <img src="{% static 'Images/slider-bg.jpg' %}" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+  <!-- end slider section -->
+
+  <!-- category section -->
+
+  <section class="cat_section">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6 col-md-4 mx-auto">
+          <div class="box cat-box1">
+            <img src="{% static 'Images/c1.jpg' %}" alt="">
+            <div class="detail-box">
+              <h2>
+                For Women
+              </h2>
+              <a href="/explore">
+                Shop Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 mx-auto">
+          <div class="box cat-box2">
+            <img src="{% static 'Images/c2.jpg' %}" alt="">
+            <div class="detail-box">
+              <h2>
+                For Men
+              </h2>
+              <a href="/explore">
+                Shop Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 mx-auto">
+          <div class="box cat-box3">
+            <img src="{% static 'Images/c3.jpg' %}" alt="">
+            <div class="detail-box">
+              <h2>
+                For kids
+              </h2>
+              <a href="/explore">
+                Shop Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end category section -->
+
+  <!-- shop section -->
+
+  <section class="shop_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Latest Products
+        </h2>
+      </div>
+
+      <div class="row">
+        {% for p in prods|slice:":4:-1" %}
+        <a href="/show-product/{{p.Name}}">
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="box">
+              <div>
+                <div class="img-box">
+                  <img src="http://localhost:8000/static/ProdImages/{{p.Image}}" alt="">
+                </div>
+                <div class="detail-box">
+                  <a href="/show-product/{{p.Name}}">
+                    {{p.Name}}
+                  </a>
+                  <h6>
+                    {% for i in p.Rating|rjust:p.Rating %}
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    {% endfor %}
+                  </h6>
+                  <h6>
+                    ₹{{p.Price}}
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+        </div>
+
+      <div class="btn-box">
+        <a href="/explore">
+          View All Products
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- end shop section -->
+
+  <!-- about section -->
+
+  <section class="about_section  ">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4 px-0">
+          <div class="img-box">
+            <img src="{% static 'Images/about-img.jpg' %}" alt="">
+          </div>
+        </div>
+        <div class="col-md-6 mx-auto detail_container">
+          <div class="detail-box">
+            <div class="heading_container">
+              <h2>
+                About Us
+              </h2>
+            </div>
+            <p>
+              OptiKart is an online seller of latest eyewears. We keep ourselves and our customers updated with latest trend in the market. Our aim is to make everyone look good and make every vison clear.            </p>
+            <a href="/about">
+              Read More
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end about section -->
+
+  <!-- blog section -->
+
+  <section class="blog_section layout_padding">
+    <div class="container">
+      <div class="heading_container">
+        <h2>
+          Latest From Blog
+        </h2>
+      </div>
+      <div class="row">
+        
+        {% for b in blogs|slice:":3:-1" %}
+        <a href="/read-blog/{{b.Name}}">
+          <div class="col-md-6 col-lg-4 mx-auto">
+            <div class="box">
+              <div class="img-box">
+                <img src="http://localhost:8000/static/BlogImages/{{b.Image}}" alt="">
+                <h4 class="blog_date">
+                  {{b.Date}}
+                </h4>
+              </div>
+              <div class="detail-box">
+                <h5>
+                  {{b.Name}}
+                </h5>
+                <p>
+                {{b.Desc}}    
+            </p>
+                <a href="/read-blog/{{b.Name}}">
+                  Read More <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+        
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- end blog section -->
+
+  <!-- client section -->
+  <section class="client_section layout_padding-bottom">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Testimonial
+        </h2>
+        <p>
+          Even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to
+        </p>
+      </div>
+    </div>
+    <div class="container px-0">
+      <div id="customCarousel2" class="carousel  slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-10 mx-auto">
+                  <div class="box">
+                    <div class="img-box">
+                      <img src="{% static 'Images/client3.jpg' %}" alt="">
+                    </div>
+                    <div class="detail-box">
+                      <div class="client_info">
+                        <div class="client_name">
+                          <h5>
+                            Seema Paul
+                          </h5>
+                          <h6>
+                            Customer
+                          </h6>
+                        </div>
+                        <i class="fa fa-quote-left" aria-hidden="true"></i>
+                      </div>
+                      <p>
+                        I had been searching for a reliable and affordable eyewear brand for a long time until I stumbled upon OptiKart. From the moment I made my first purchase, I knew I had found a gem. The ordering process was seamless, and the customer service was exceptional. What impressed me the most was the value for money I received. The quality of their eyewear rivals that of high-end designer brands without the hefty price tag. Thanks to OptiKart, I now own several pairs to match different occasions and outfits. If you want trendy, durable, and affordable eyewear, I highly recommend giving OptiKart a try!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-10 mx-auto">
+                  <div class="box">
+                    <div class="img-box">
+                      <img src="{% static 'Images/client2.jpg' %}" alt="">
+                    </div>
+                    <div class="detail-box">
+                      <div class="client_info">
+                        <div class="client_name">
+                          <h5>
+                            Jyoti Mukherjee
+                          </h5>
+                          <h6>
+                            Customer
+                          </h6>
+                        </div>
+                        <i class="fa fa-quote-left" aria-hidden="true"></i>
+                      </div>
+                      <p>
+                        OptiKart has completely changed my perception of eyewear! As someone who wears glasses daily, finding a brand that offers both comfort and style has always been a challenge. However, since discovering OptiKart, I have never looked back. Their frames are incredibly comfortable, and the quality is unbeatable. Moreover, I love how they keep up with the latest trends, ensuring that I can always find the perfect pair that complements my personal style. If you're looking for eyewear that enhances your look and boosts your confidence, look no further than OptiKart!"
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-10 mx-auto">
+                  <div class="box">
+                    <div class="img-box">
+                      <img src="{% static 'Images/client1.jpg' %}" alt="">
+                    </div>
+                    <div class="detail-box">
+                      <div class="client_info">
+                        <div class="client_name">
+                          <h5>
+                            Jayant Oberoy
+                          </h5>
+                          <h6>
+                            Customer
+                          </h6>
+                        </div>
+                        <i class="fa fa-quote-left" aria-hidden="true"></i>
+                      </div>
+                      <p>
+                        I have been a loyal customer of OptiKart for years, and I cannot express how impressed I am with their products. Their eyewear is not only stylish and trendy but also of top-notch quality. I love how their designs cater to various tastes and preferences, ensuring there's something for everyone. Not to mention, the lenses provide excellent clarity and protection, making them perfect for everyday wear or outdoor activities. I recommend OptiKart to all my friends and family, as they have truly mastered the art of blending fashion with functionality.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel_btn-box">
+          <a class="carousel-control-prev" href="#customCarousel2" role="button" data-slide="prev">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#customCarousel2" role="button" data-slide="next">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end client section -->
+
+
+
+{% endblock %}

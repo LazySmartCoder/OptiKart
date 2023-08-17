@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <link rel="icon" href="{% static 'Images/OptiKart Logo Circle.png' %}" type="image/gif" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>{% block title %}{% endblock %}</title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/css/bootstrap.css' %}" />
+  <!-- font awesome style -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="{% static 'css/css/font-awesome.min.css' %}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'css/css/responsive.css' %}" rel="stylesheet" />
+
+</head>
+
+  <!-- header section strats -->
+  <header class="header_section">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg custom_nav-container">
+        <a class="navbar-brand" href="/">
+          <span style="color: black;">
+            OptiKart
+          </span>
+        </a>
+
+        <div class="" id="">
+
+          <div class="custom_menu-btn">
+            <button onclick="openNav()">
+              <span class="s-1"> </span>
+              <span class="s-2"> </span>
+              <span class="s-3"> </span>
+            </button>
+            <h1></h1>
+            <a href="/cart">
+              <button >
+                <h1><i class="fa fa-shopping-cart" style="color:purple"></i></h1>
+              </button>
+            </a>
+            <div id="myNav" class="overlay">
+              <div class="overlay-content">
+                <input type="text" placeholder="Search...">
+                <a href="/">Home</a>
+                <a href="/explore">Explore</a>
+                {% if request.user.is_authenticated == False %}
+                <a href="/signin">Signin</a>
+                <a href="/signup">Signup</a>
+                {% else %}
+                <a href="/signout">SignOUT</a>
+                <a href="/deleteacc">Delete Account</a>
+                {% endif %}
+                <a href="/blogs">Blogs</a>
+                <a href="/about">About OptiKart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    {% for message in messages %}
+{% if messages %}
+          <div class="alert alert-{{message.tags}}" role="alert">
+            <strong>Message: </strong> {{message}}
+          </div>
+          {% endif %}
+{% endfor %}
+  </header>
+  <!-- end header section -->
+
+{% block body %}{% endblock %}
+
+<!-- info section -->
+
+
+<footer class="footer_section">
+
+  <section class="info_section ">
+    <div class="container-fluid">
+      <div class="row info_main_row">
+        <div class="col-lg-7 mx-auto">
+          <div class="row">
+            <div class="col-md-4 info-col">
+              <div class="info_detail">
+                <h4>
+                  About
+                </h4>
+                <p style="color: white;">
+                  OptiKart is an online seller of latest eyewears. We keep ourselves and our customers updated with latest trend in the market. Our aim is to make everyone look good and make every vison clear.
+                </p>
+                <div class="info_social">
+                  <a href="/">
+                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                  </a>
+                  <a href="/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                  </a>
+                  <a href="/">
+                    <i class="fa fa-linkedin" aria-hidden="true"></i>
+                  </a>
+                  <a href="https://instagram.com/anirbanbhattacharya.in">
+                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 info-col">
+              <div class="info_contact">
+                <h4>
+                  Reach Us at...
+                </h4>
+                <div class="contact_link_box">
+                  <br>
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <span>
+                      Chandni Chowk, Delhi, India
+                    </span>
+<br>
+
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    <span>
+                      Call +91 6355853038
+                    </span>
+
+<br>
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <span>
+                      optikart@anirbanbhattacharya.in
+                    </span>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 info-col">
+              <div class="info_contact">
+                <h4>
+                  Subscribe
+                </h4>
+                <form action="#">
+                  <input type="text" placeholder="Your Email..." />
+                  <button type="submit">
+                    Subscribe
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 px-0 info-col">
+          <div class="map_container">
+            <div class="map">
+              <div id="googleMap">
+                <iframe src="https://www.google.com/maps/d/embed?mid=11im56NVDGhfYg2C0ODwOW-L9cdk&hl=en_GB&ehbc=2E312F" width="640" height="480"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </footer>
+  <!-- footer section -->
+
+
+  <script src="{% static 'css/js/jquery-3.4.1.min.js' %}"></script>
+  <script src="{% static 'css/js/bootstrap.js' %}"></script>
+  <script src="{% static 'css/js/custom.js' %}"></script>
+  </script>
+</body>
+
+</html>
