@@ -174,4 +174,7 @@ def rating(request, prod):
     prod.Rating = prod.Rating + int(request.GET["rating"])
     prod.ActRates = (prod.Rating) // int(prod.Rates)
     prod.save()
+    print(request.GET["rating"])
     return redirect(f"/show-product/{prod}")
+
+

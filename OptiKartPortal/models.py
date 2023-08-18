@@ -14,11 +14,11 @@ class Product(models.Model):
     Name = models.CharField(max_length=50)
     Desc = models.TextField(max_length=5000)
     Seller = models.CharField(max_length=50)
-    Rating = models.IntegerField()
+    Rating = models.IntegerField(default=0)
     Price = models.IntegerField()
     Image = models.CharField(max_length=200)
-    Rates = models.CharField(blank=False, max_length=20, default="")
-    ActRates = models.CharField(blank=False, max_length=20, default="")
+    Rates = models.CharField(blank=False, max_length=20, default="0")
+    ActRates = models.CharField(blank=False, max_length=20, default="0")
 
     def __str__(self):
         return self.Name

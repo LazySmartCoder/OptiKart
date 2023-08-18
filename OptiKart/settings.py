@@ -77,13 +77,12 @@ WSGI_APPLICATION = "OptiKart.wsgi.application"
 
 DATABASES = {
 	'default': {
-		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'OptiKartDB',
-		'USER': 'root',
-		'PASSWORD': 'nabrinab',
-		'HOST':'localhost',
-		'PORT':'3306',
-	}
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'OptiKartDB',
+    'USER':'root',
+    'PASSWORD':'nabrinab',
+    'HOST':'localhost',
+}
 }
 
 
