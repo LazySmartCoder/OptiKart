@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %}
+Blogs | OptiKart
+{% endblock %}
+{% block body %}
+{% load static %}
+
+<section class="shop_section layout_padding">
+    <div class="container">
+
+        <h2 style="text-align: center;">
+          Search Results for <strong>{{text}}</strong>...
+        </h2>
+        <br>
+        <form action="/search-results" method="get">
+            <div class="container">
+              <div class="row height d-flex justify-content-center align-items-center">
+                  <div class="col-md-8">
+                      <div class="search"> <i class="fa fa-search"></i> <input style="border-color: rgb(0, 0, 0); border-radius: 600px" name="search" type="search" class="form-control" placeholder="Search..." required> <button class="btn btn-dark">🔍</button> </div>
+                  </div>
+              </div>
+          </div>
+          </form>
+          <br>
+      <div class="row">
+        
+        {% for s in search|slice:"::1" %}
+        <a href="/show-product/{{s.Name}}">
+          <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="box">
+            <div>
+              <div class="img-box">
+                <img src="http://localhost:8000/static/ProdImages/{{s.Image}}" alt="">
+              </div>
+              <div class="detail-box">
+                <a href="/show-product/{{s.Name}}">
+                  {{s.Name}}
+                </a>
+                <h6>
+                  {% for i in s.Rating|rjust:s.Rating %}
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  {% endfor %}
+                </h6>
+                <h6>
+                  ₹{{s.Price}}
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        </a>
+        {% endfor %}
+
+      </div>
+  </section>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap");
+  
+    .height {
+        height: 10vh
+    }
+    
+    .search {
+        position: relative;
+        box-shadow: rgb(255, 255, 255)
+    }
+    
+    .search input {
+        height: 60px;
+        text-indent: 25px;
+        border: 2px solid white
+    }
+    
+    .search input:focus {
+        box-shadow: none;
+        border: 2px solid white
+    }
+    
+    .search .fa-search {
+        position: absolute;
+        top: 20px;
+        left: 16px
+    }
+    
+    .search button {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        height: 50px;
+      width: 50px;
+      border-radius:400px;
+      border-color: black;
+        background: black
+    }
+  </style>
+{% endblock %}

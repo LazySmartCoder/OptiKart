@@ -15,7 +15,6 @@ urlpatterns = [
     path("signupdone", views.signupdone, name = "SignUPdone"),
     path("cart", views.Cart, name = "Cart"),
     path("add-cart/<str:prodname>", views.addCart, name = "AddCart"),
-    path("payment", views.payment, name = "Payment"),
     path("newsletters", views.newsletters, name = "Newsletters"),
     path("search", views.search, name = "Search"),
     path("about", views.about, name = "AboutUs"),
@@ -30,4 +29,6 @@ urlpatterns = [
     path("password-change", views.passwordchange, name = "PasswordChange"),
     path("place-order", views.OrderPlace, name = "OrderPlace"),
     path("checkout", views.checkout, name = "Checkout"),
+    path("your-orders", views.yourorders, name = "YourOrders"),
+    path("search-results", views.search, name = "SearchResults"),
 ]

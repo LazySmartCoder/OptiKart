@@ -7,8 +7,13 @@ Blogs | OptiKart
 
 <section class="shop_section layout_padding">
 
-    https://bbbootstrap.com/snippets/ecommerce-product-order-details-tracking-63470618
-
+    <h1 style="text-align: center;"><img src="{% static 'Images/placed.gif' %}" alt=""></h1>
+    <h3 style="text-align: center;">Thank you <strong>{{request.user.first_name}}</strong> for placing order with us!</h3>
+    <div class="btn-box">
+        <a href="/your-orders">
+          Track Your Orders
+        </a>
+      </div>
 </section>
 
 {% endblock %}

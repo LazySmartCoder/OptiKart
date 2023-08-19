@@ -39,8 +39,6 @@
           </span>
         </a>
 
-        <div class="" id="">
-
           <div class="custom_menu-btn">
             <button onclick="openNav()">
               <span class="s-1"> </span>
@@ -55,22 +53,32 @@
             </a>
             <div id="myNav" class="overlay">
               <div class="overlay-content">
-                <input type="text" placeholder="Search...">
-                <a href="/">Home</a>
+                <form action="/search-results" method="get">
+                  <div class="container">
+                    <div class="row height d-flex justify-content-center align-items-center">
+                        <div class="col-md-8">
+                            <div class="search"> <i class="fa fa-search"></i> <input style="border-color: rgb(0, 0, 0); border-radius: 600px" name="search" type="search" class="form-control" placeholder="Search..." required> <button class="btn btn-dark">🔍</button> </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+                <br>
+                  <a href="/">Home</a>
                 <a href="/explore">Explore</a>
                 {% if request.user.is_authenticated == False %}
-                <a href="/signin">Signin</a>
-                <a href="/signup">Signup</a>
+                <a href="/signin">SignIN</a>
+                <a href="/signup">SignUP</a>
                 {% else %}
                 <a href="/signout">SignOUT</a>
                 <a href="/userprofile">My Profile</a>
+                <a href="/your-orders">Your Orders</a>
                 {% endif %}
                 <a href="/blogs">Blogs</a>
                 <a href="/about">About OptiKart</a>
               </div>
             </div>
           </div>
-        </div>
+
       </nav>
     </div>
     {% for message in messages %}
@@ -151,11 +159,12 @@
                 <h4>
                   Subscribe
                 </h4>
-                <form action="#">
-                  <input type="text" placeholder="Your Email..." />
+                <form action="/newsletters" method="POST">
+                  <input type="text" name="email" placeholder="Your Email..." />
                   <button type="submit">
                     Subscribe
                   </button>
+                  {% csrf_token %}
                 </form>
               </div>
             </div>
@@ -182,5 +191,43 @@
   <script src="{% static 'css/js/custom.js' %}"></script>
   </script>
 </body>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap");
 
+  .height {
+      height: 10vh
+  }
+  
+  .search {
+      position: relative;
+      box-shadow: rgb(255, 255, 255)
+  }
+  
+  .search input {
+      height: 60px;
+      text-indent: 25px;
+      border: 2px solid white
+  }
+  
+  .search input:focus {
+      box-shadow: none;
+      border: 2px solid white
+  }
+  
+  .search .fa-search {
+      position: absolute;
+      top: 20px;
+      left: 16px
+  }
+  
+  .search button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      height: 50px;
+    width: 50px;
+    border-radius:400px;
+      background: black
+  }
+</style>
 </html>

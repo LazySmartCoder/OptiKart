@@ -10,6 +10,8 @@ from email.header import Header
 from email.utils import formataddr
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
+import datetime
+import time
 
 '''Here the main code is beign written which is views.py'''
 
@@ -109,35 +111,32 @@ def signin(request):
 def signup(request):
     return render(request, "signup.html")
 
-def signindone(request):
-    pass
-
 def signupdone(request):
-    if  request.method == "POST":
-        name = request.POST["name"]
-        email = request.POST["email"]
-        pass1 = request.POST["pass1"]
-        pass2 = request.POST["pass2"]
-        if pass1 != pass2:
-            messages.warning(request, "Passwords Unmatched.")
-            return redirect("SignUP")
-        if User.objects.filter(username=email).exists():
-            messages.warning(request, "This account is already registered to us with this email.")
-            return redirect("SignUP")
-        creating_user = User.objects.create_user(username=email, password=pass1)
-        creating_user.email = email
-        creating_user.first_name = name
-        creating_user.save()
-        authenticating = authenticate(username=email, password=pass1)
-        if authenticating is not None:
-            login(request, authenticating)
-            userdet = User.objects.get(username = request.user.username)
-            print(userdet)
-            messages.success(request, "Your OptiKart account has been created succesfully.")
-        else:
-            messages.warning(request, "An unexpected error occured.")
-            return redirect("SignUP")
-        return redirect("HomePage")
+    if request.method == "POST":
+       name = request.POST["name"]
+       email = request.POST["email"]
+       pass1 = request.POST["pass1"]
+       pass2 = request.POST["pass2"]
+       if pass1 != pass2:
+           messages.warning(request, "Passwords Unmatched.")
+           return redirect("SignUP")
+       if User.objects.filter(username=email).exists():
+           messages.warning(request, "This account is already registered to us with this email.")
+           return redirect("SignUP")
+       creating_user = User.objects.create_user(username=email, password=pass1)
+       creating_user.email = email
+       creating_user.first_name = name
+       creating_user.save()
+       authenticating = authenticate(username=email, password=pass1)
+       if authenticating is not None:
+           login(request, authenticating)
+           userdet = User.objects.get(username = request.user.username)
+           print(userdet)
+           messages.success(request, "Your OptiKart account has been created succesfully.")
+       else:
+           messages.warning(request, "An unexpected error occured.")
+           return redirect("SignUP")
+       return redirect("HomePage")
     return redirect("ErrorPage")
 
 def error(request):
@@ -181,13 +180,22 @@ def DeleteAccount(request):
     return redirect("ErrorPage")
 
 def search(request):
-    pass
+    search = request.GET["search"]
+    searching = Product.objects.filter(Name__icontains = search) or Product.objects.filter(Desc__icontains = search) or Product.objects.filter(Seller__icontains = search)
+    params = {
+        "search" : searching,
+        "text" : search
+    }
+    return render(request, "search.html", params)
 
 def newsletters(request):
-    pass
+    if request.method == "POST":
+        mail = NewsMail(Email = request.POST["email"])
+        mail.save()
+        messages.success(request, "Thank you for subscribing to our Newsletters!")
+        return redirect("HomePage")
+    return redirect("ErrorPage")
 
-def payment(request):
-    pass
 
 def rating(request, prod):
     prod = Product.objects.get(Name = prod)
@@ -241,9 +249,26 @@ def OrderPlace(request):
         "placeOrder" : cart,
         "price" : price,
         "gst" : gst,
-        "total" : price + gst
+        "total" : price + gst + 250
     }
     return render(request, "order-place.html", params)
 
 def checkout(request):
+    time.sleep(3)
     return render(request, "checkout.html")
+
+def yourorders(request):
+    cart = CartItem.objects.filter(User = request.user)
+    price = 0
+    for i in cart:
+        price += i.Product.Price
+    gst = price * 0.18
+    params = {
+        "order" : cart,
+        "date" : datetime.datetime.now(),
+        "placeOrder" : cart,
+        "price" : price,
+        "gst" : gst,
+        "total" : price + gst + 250
+    }
+    return render(request, "your-orders.html", params)
