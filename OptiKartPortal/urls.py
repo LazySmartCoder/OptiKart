@@ -6,7 +6,6 @@ from OptiKartPortal import views
 
 urlpatterns = [
     path("", views.index, name = "HomePage"),
-    # path("custom", views.custom, name = "Custom"),
     path("blogs", views.blogs, name = "Blogs"),
     path("read-blog/<str:blogsname>", views.readBlogs, name = "ReadBlogs"),
     path("signin", views.signin, name = "SignIN"),
@@ -26,4 +25,5 @@ urlpatterns = [
     path("forgot-password", views.forgotpass, name = "PassForgot"),
     path("deleteacc", views.DeleteAccount, name = "DeleteAccount"),
     path("rating/<str:prod>", views.rating, name = "rating"),
+    path("userprofile", views.userprofile, name = "UserProfile"),
 ]

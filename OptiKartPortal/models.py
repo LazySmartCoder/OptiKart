@@ -36,7 +36,7 @@ class Blog(models.Model):
 
 class CartItem(models.Model):
     Product = models.ForeignKey(Product, related_name="Product", on_delete=models.CASCADE)
-    # User = models.ForeignKey(User, related_name="UserDetails", on_delete=models.CASCADE)
+    User = models.ForeignKey(User, related_name="UserDetails", on_delete=models.CASCADE, default=1)
     def __str__(self):
         return self.Product.Name
 

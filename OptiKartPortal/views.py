@@ -74,12 +74,22 @@ def showProds(request, prodname):
     return render(request, "show-prod.html", prodparams)
 
 def Cart(request):
-    return render(request, "Cart.html")
+    if request.user.is_authenticated:
+        car = CartItem.objects.filter(User=request.user)
+        params = {
+            "item" : car
+        }
+        return render(request, "Cart.html", params)
+    else:
+        messages.warning(request, "Kindly SignIN to use Cart facility.")
+        return redirect("SignIN")
 
 def addCart(request, prodname):
     prod = Product.objects.get(Name = prodname)
-    cart = CartItem.objects.all()
-    creating = CartItem(Product = prod)
+    if CartItem.objects.filter(Product = prod, User = request.user).exists():
+        messages.warning(request, "This product is already added to the cart.")
+        return redirect(f"/show-product/{prodname}")
+    creating = CartItem(Product = prod, User=request.user)
     creating.save()
     messages.success(request, "Your product has been added to the Cart.")
     return redirect(f"/show-product/{prodname}")
@@ -109,7 +119,7 @@ def signupdone(request):
             messages.warning(request, "This account is already registered to us with this email.")
             return redirect("SignUP")
         creating_user = User.objects.create_user(username=email, password=pass1)
-        creating_user.email = user_otp
+        creating_user.email = email
         creating_user.first_name = name
         creating_user.save()
         authenticating = authenticate(username=email, password=pass1)
@@ -174,7 +184,8 @@ def rating(request, prod):
     prod.Rating = prod.Rating + int(request.GET["rating"])
     prod.ActRates = (prod.Rating) // int(prod.Rates)
     prod.save()
-    print(request.GET["rating"])
     return redirect(f"/show-product/{prod}")
 
+def userprofile(request):
+    return render(request, "user-profile.html")
 

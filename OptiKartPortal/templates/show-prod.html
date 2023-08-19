@@ -17,9 +17,12 @@ Blogs | OptiKart
         <i class="fa fa-star" aria-hidden="true"></i>
         {% endfor %}
         <br><br>
-        <h5 style="text-align: left;">Price: ₹{{price}}</h5>
-        <h5 style="text-align: left;">Seller: {{seller}}</h5>
-        <h1 style="text-align: left;"><a href="/add-cart/{{name}}"><button class="btn btn-outline-success">Add to Cart <i class="fa fa-shopping-cart"></i></button></a></h1>
+        <h4 style="text-align: left;">Price: ₹{{price}}</h4>
+        <br>
+        <h4 style="text-align: left;">Seller: {{seller}}</h4>
+        <br>
+        <h4 style="text-align: left;">Description:</h4>
+        <p style="text-align: left;">{{desc}}</p>
         <form action="/rating/{{name}}" name="rater" id="rater">
             <div class="rating">
                 <input type="radio" name="rating" onclick="document.getElementById('rater').submit();" value="5" id="5"><label for="5">☆</label>
@@ -30,8 +33,9 @@ Blogs | OptiKart
               </div>
             
               </form>
-        <h4 style="text-align: left;">Description:</h4>
-        <p style="text-align: left;">{{desc}}</p>
+              {% if request.user.is_authenticated %}
+              <a href="/add-cart/{{name}}"><button style="width: 100%" class="btn btn-outline-success">Add to Cart <i class="fa fa-shopping-cart"></i></button></a>
+              {% endif %}
             </div>
     </center>
     <style media="screen">
@@ -39,7 +43,7 @@ Blogs | OptiKart
         .rating {
         display: flex;
         flex-direction: row-reverse;
-        justify-content: left;
+        justify-content: center;
         }
         
         
