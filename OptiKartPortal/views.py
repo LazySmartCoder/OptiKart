@@ -9,6 +9,7 @@ from email.mime.text import MIMEText
 from email.header import Header
 from email.utils import formataddr
 from django.contrib import messages
+from django.contrib.auth.hashers import check_password
 
 '''Here the main code is beign written which is views.py'''
 
@@ -69,7 +70,8 @@ def showProds(request, prodname):
         "rating" : prod.ActRates,
         "price" : prod.Price,
         "image" : prod.Image,
-        "rating" : range(int(prod.ActRates))
+        "rating" : range(int(prod.ActRates)),
+        "bool" : CartItem.objects.filter(Product = prod, User = request.user).exists()
     }
     return render(request, "show-prod.html", prodparams)
 
@@ -85,14 +87,18 @@ def Cart(request):
         return redirect("SignIN")
 
 def addCart(request, prodname):
-    prod = Product.objects.get(Name = prodname)
-    if CartItem.objects.filter(Product = prod, User = request.user).exists():
-        messages.warning(request, "This product is already added to the cart.")
+    if request.user.is_authenticated:
+        prod = Product.objects.get(Name = prodname)
+        if CartItem.objects.filter(Product = prod, User = request.user).exists():
+            cart = CartItem.objects.get(Product = prod, User = request.user)
+            cart.delete()
+            messages.success(request, "Product Removed from cart.")
+        else:
+            creating = CartItem(Product = prod, User=request.user)
+            creating.save()
+            messages.success(request, "Your product has been added to the Cart.")
         return redirect(f"/show-product/{prodname}")
-    creating = CartItem(Product = prod, User=request.user)
-    creating.save()
-    messages.success(request, "Your product has been added to the Cart.")
-    return redirect(f"/show-product/{prodname}")
+    return redirect("ErrorPage")
 
 def about(request):
     return render(request, "about.html")
@@ -161,12 +167,17 @@ def signout(request):
     return redirect("ErrorPage")
 
 def DeleteAccount(request):
-    if request.user.is_authenticated:
-        user = User.objects.get(username = request.user)
-        user.delete()
-        user.save()
-        messages.success(request, "Your account has been successfully deleted. Never come back...")
-        return redirect("HomePage")
+    if request.method == "POST":
+        password = request.POST["password"]
+        if check_password(password, request.user.password):
+            user = User.objects.get(username = request.user)
+            user.delete()
+            user.save()
+            messages.success(request, "Your account has been successfully deleted. Never come back...")
+            return redirect("HomePage")
+        else:
+            messages.warning(request, "Please enter the correct password.")
+            return redirect("UserProfile")
     return redirect("ErrorPage")
 
 def search(request):
@@ -189,3 +200,50 @@ def rating(request, prod):
 def userprofile(request):
     return render(request, "user-profile.html")
 
+def profileupdate(request):
+    if request.method == "POST":
+        if check_password(request.POST["password"], request.user.password):
+            name = request.POST["name"]
+            email = request.POST["email"]
+            user = User.objects.get(username = request.user)
+            user.first_name = name
+            user.email = user.username = email
+            user.save()
+            messages.success(request, "Your profile has been successfully updated.")
+        else:
+            messages.warning(request, "Please enter the correct password.")
+        return redirect("UserProfile")
+    return redirect("ErrorPage")
+
+def passwordchange(request):
+    if request.method == "POST":
+        password = request.POST["pass"]
+        newpass1 = request.POST["newpass1"]
+        newpass2 = request.POST["newpass2"]
+        if (newpass1 == newpass2) and check_password(password, request.user.password):
+            user = User.objects.get(username = request.user)
+            user.set_password(newpass2)
+            user.save()
+            logout(request)
+            messages.success(request, "Your password has been updated sucessfully.")
+            return redirect("HomePage")
+        else:
+            messages.warning(request, "Something went wrong.")
+            return redirect("UserProfile")
+
+def OrderPlace(request):
+    cart = CartItem.objects.filter(User = request.user)
+    price = 0
+    for i in cart:
+        price += i.Product.Price
+    gst = price * 0.18
+    params = {
+        "placeOrder" : cart,
+        "price" : price,
+        "gst" : gst,
+        "total" : price + gst
+    }
+    return render(request, "order-place.html", params)
+
+def checkout(request):
+    return render(request, "checkout.html")

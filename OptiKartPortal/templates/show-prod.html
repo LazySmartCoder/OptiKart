@@ -34,7 +34,11 @@ Blogs | OptiKart
             
               </form>
               {% if request.user.is_authenticated %}
+              {% if bool == True %}
+              <a href="/add-cart/{{name}}"><button style="width: 100%" class="btn btn-outline-danger">Remove from Cart <i class="fa fa-shopping-cart"></i></button></a>
+              {% else %}
               <a href="/add-cart/{{name}}"><button style="width: 100%" class="btn btn-outline-success">Add to Cart <i class="fa fa-shopping-cart"></i></button></a>
+              {% endif %}
               {% endif %}
             </div>
     </center>

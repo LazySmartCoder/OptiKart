@@ -26,4 +26,8 @@ urlpatterns = [
     path("deleteacc", views.DeleteAccount, name = "DeleteAccount"),
     path("rating/<str:prod>", views.rating, name = "rating"),
     path("userprofile", views.userprofile, name = "UserProfile"),
+    path("profile-update", views.profileupdate, name = "ProfileUpdate"),
+    path("password-change", views.passwordchange, name = "PasswordChange"),
+    path("place-order", views.OrderPlace, name = "OrderPlace"),
+    path("checkout", views.checkout, name = "Checkout"),
 ]
