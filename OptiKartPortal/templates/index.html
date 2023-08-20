@@ -32,7 +32,7 @@ OptiKart
               looking at its layout. The point of using Lorem
             </p>
             <div>
-              <a href="" class="slider-link">
+              <a href="/explore" class="slider-link">
                 Explore
               </a>
             </div>
@@ -43,17 +43,17 @@ OptiKart
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <div class="slider_img_box">
-                  <img src="{% static 'Images/slider-bg.jpg' %}" alt="">
+                  <img src="{% static 'Images/dog.webp' %}" alt="">
                 </div>
               </div>
               <div class="carousel-item">
                 <div class="slider_img_box">
-                  <img src="{% static 'Images/slider-bg.jpg' %}" alt="">
+                  <img src="{% static 'Images/girl.webp' %}" alt="">
                 </div>
               </div>
               <div class="carousel-item">
                 <div class="slider_img_box">
-                  <img src="{% static 'Images/slider-bg.jpg' %}" alt="">
+                  <img src="{% static 'Images/man.webp' %}" alt="">
                 </div>
               </div>
             </div>
@@ -132,14 +132,14 @@ OptiKart
             <div class="box">
               <div>
                 <div class="img-box">
-                  <img src="http://localhost:8000/static/ProdImages/{{p.Image}}" alt="">
+                  <img src="http://{{pic}}/static/ProdImages/{{p.Image}}" alt="">
                 </div>
                 <div class="detail-box">
                   <a href="/show-product/{{p.Name}}">
                     {{p.Name}}
                   </a>
                   <h6>
-                    {% for i in p.Rating|rjust:p.Rating %}
+                    {% for i in p.ActRates|rjust:p.ActRates %}
                     <i class="fa fa-star" aria-hidden="true"></i>
                     {% endfor %}
                   </h6>
@@ -200,7 +200,7 @@ OptiKart
     <div class="container">
       <div class="heading_container">
         <h2>
-          Latest From Blog
+          Latest From Blogs
         </h2>
       </div>
       <div class="row">
@@ -210,7 +210,7 @@ OptiKart
           <div class="col-md-6 col-lg-4 mx-auto">
             <div class="box">
               <div class="img-box">
-                <img src="http://localhost:8000/static/BlogImages/{{b.Image}}" alt="">
+                <img src="http://{{pic}}/static/BlogImages/{{b.Image}}" alt="">
                 <h4 class="blog_date">
                   {{b.Date}}
                 </h4>
@@ -246,7 +246,7 @@ OptiKart
           Testimonial
         </h2>
         <p>
-          Even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to
+          Have a look what society think of us!!
         </p>
       </div>
     </div>

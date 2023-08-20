@@ -40,3 +40,9 @@ class CartItem(models.Model):
     def __str__(self):
         return self.Product.Name
 
+class OrderStatus(models.Model):
+    Product = models.ForeignKey(Product, related_name="OrderProduct", on_delete=models.CASCADE)
+    User = models.ForeignKey(User, related_name="OrderUserDetails", on_delete=models.CASCADE, default=1)
+    def __str__(self):
+        return self.Product.Name
+

@@ -1,6 +1,6 @@
 # Importing some required packages
 from django.shortcuts import render, redirect
-from OptiKartPortal.models import Product, NewsMail, Blog, CartItem
+from OptiKartPortal.models import Product, NewsMail, Blog, CartItem, OrderStatus
 from django.contrib.auth.models import User
 from django.contrib.auth import login, login, authenticate, logout
 import smtplib
@@ -14,15 +14,7 @@ import datetime
 import time
 
 '''Here the main code is beign written which is views.py'''
-
-# Write some important functions over here
-def otpGen():
-    import random
-    otp = ""
-    for OTP in range(4):
-        otp += str(random.randint(1, 9))
-    return otp
-user_otp = otpGen()
+pic = "localhost:8000"
 
 # Write the django functions over here
 def index(request):
@@ -30,14 +22,16 @@ def index(request):
     blogs = Blog.objects.all()
     prodparams = {
         "prods" : prods,
-        "blogs" : blogs
+        "blogs" : blogs,
+        "pic" : pic,
     }
     return render(request, "index.html", prodparams)
     
 def blogs(request):
     blogs = Blog.objects.all()
     blogparams = {
-        "blogs" : blogs
+        "blogs" : blogs,
+        "pic" : pic,
     }
     return render(request, "blog.html", blogparams)
 
@@ -47,9 +41,11 @@ def readBlogs(request, blogsname):
         "readb" : blogdet,
         "name" : blogdet.Name,
         "desc" : blogdet.Desc,
+        "pic" : pic,
         "post" : blogdet.Post,
         "image" : blogdet.Image,
         "date" : blogdet.Date,
+        "pic" : pic,
         "views" : blogdet.Views
     }
     blogdet.Views = blogdet.Views + 1
@@ -59,7 +55,8 @@ def readBlogs(request, blogsname):
 def explore(request):
     prod = Product.objects.all()
     prodparams = {
-        "prods" : prod
+        "prods" : prod,
+        "pic" : pic,
     }
     return render(request, "explore.html", prodparams)
 
@@ -72,8 +69,9 @@ def showProds(request, prodname):
         "rating" : prod.ActRates,
         "price" : prod.Price,
         "image" : prod.Image,
+        "pic" : pic,
         "rating" : range(int(prod.ActRates)),
-        "bool" : CartItem.objects.filter(Product = prod, User = request.user).exists()
+        "bool" : CartItem.objects.filter(Product = prod, User = request.user).exists() if request.user.is_authenticated else None
     }
     return render(request, "show-prod.html", prodparams)
 
@@ -81,7 +79,8 @@ def Cart(request):
     if request.user.is_authenticated:
         car = CartItem.objects.filter(User=request.user)
         params = {
-            "item" : car
+            "item" : car,
+            "pic" : pic,
         }
         return render(request, "Cart.html", params)
     else:
@@ -184,7 +183,8 @@ def search(request):
     searching = Product.objects.filter(Name__icontains = search) or Product.objects.filter(Desc__icontains = search) or Product.objects.filter(Seller__icontains = search)
     params = {
         "search" : searching,
-        "text" : search
+        "text" : search,
+        "pic" : pic,
     }
     return render(request, "search.html", params)
 
@@ -249,26 +249,35 @@ def OrderPlace(request):
         "placeOrder" : cart,
         "price" : price,
         "gst" : gst,
-        "total" : price + gst + 250
+        "total" : price + gst + 250,
+        "pic" : pic,
     }
     return render(request, "order-place.html", params)
 
 def checkout(request):
+    cart = CartItem.objects.filter(User = request.user)
+    for i in cart:
+        if OrderStatus.objects.filter(Product = i.Product, User = request.user).exists():
+            pass
+        else:
+            creatingOrder = OrderStatus(Product = i.Product, User = request.user)
+            creatingOrder.save()
     time.sleep(3)
     return render(request, "checkout.html")
 
 def yourorders(request):
-    cart = CartItem.objects.filter(User = request.user)
+    order = OrderStatus.objects.filter(User = request.user)
     price = 0
-    for i in cart:
+    for i in order:
         price += i.Product.Price
     gst = price * 0.18
     params = {
-        "order" : cart,
+        "order" : order,
         "date" : datetime.datetime.now(),
-        "placeOrder" : cart,
+        "placeOrder" : order,
         "price" : price,
         "gst" : gst,
-        "total" : price + gst + 250
+        "total" : price + gst + 250,
+        "pic" : pic,
     }
     return render(request, "your-orders.html", params)

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-Blogs | OptiKart
+{{text}} | OptiKart
 {% endblock %}
 {% block body %}
 {% load static %}
@@ -24,20 +24,21 @@ Blogs | OptiKart
           <br>
       <div class="row">
         
+        {% if search %}
         {% for s in search|slice:"::1" %}
         <a href="/show-product/{{s.Name}}">
           <div class="col-sm-6 col-md-4 col-lg-3">
           <div class="box">
             <div>
               <div class="img-box">
-                <img src="http://localhost:8000/static/ProdImages/{{s.Image}}" alt="">
+                <img src="http://{{pic}}/static/ProdImages/{{s.Image}}" alt="">
               </div>
               <div class="detail-box">
                 <a href="/show-product/{{s.Name}}">
                   {{s.Name}}
                 </a>
                 <h6>
-                  {% for i in s.Rating|rjust:s.Rating %}
+                  {% for i in s.ActRates|rjust:s.ActRates %}
                   <i class="fa fa-star" aria-hidden="true"></i>
                   {% endfor %}
                 </h6>
@@ -50,6 +51,11 @@ Blogs | OptiKart
         </div>
         </a>
         {% endfor %}
+        {% else %}
+        <div id="about" class="w3-content w3-container w3-padding-64" style="max-width: 800px;">
+        <h3 style="text-align: center">No search results found for <strong>{{text}}</strong></h3>
+        </div>
+        {% endif %}
 
       </div>
   </section>

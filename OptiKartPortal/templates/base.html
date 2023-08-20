@@ -8,20 +8,19 @@
   <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Site Metas -->
-  <link rel="icon" href="{% static 'Images/OptiKart Logo Circle.png' %}" type="image/gif" />
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
+  <link rel="icon" href="{% static 'Images/OptiKart Logo Circle.png' %}"/>
+  <meta name="keywords" content="OptiKart" />
+  <meta name="description" content="OptiKart" />
+  <meta name="author" content="OptiKart" />
 
   <title>{% block title %}{% endblock %}</title>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="{% static 'css/css/bootstrap.css' %}" />
   <!-- font awesome style -->
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'css/css/w3css.css' %}">
   <link href="{% static 'css/css/font-awesome.min.css' %}" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'css/css/cloudflare.css' %}">
   <!-- Custom styles for this template -->
   <link href="{% static 'css/css/style.css' %}" rel="stylesheet" />
   <!-- responsive style -->
@@ -91,10 +90,11 @@
   </header>
   <!-- end header section -->
 
-{% block body %}{% endblock %}
+{% block body %}
+
+{% endblock %}
 
 <!-- info section -->
-
 
 <footer class="footer_section">
 

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-Blogs | OptiKart
+Explore | OptiKart
 {% endblock %}
 {% block body %}
 {% load static %}
@@ -21,14 +21,14 @@ Blogs | OptiKart
           <div class="box">
             <div>
               <div class="img-box">
-                <img src="http://localhost:8000/static/ProdImages/{{p.Image}}" alt="">
+                <img src="http://{{pic}}/static/ProdImages/{{p.Image}}" alt="">
               </div>
               <div class="detail-box">
                 <a href="/show-product/{{p.Name}}">
                   {{p.Name}}
                 </a>
                 <h6>
-                  {% for i in p.Rating|rjust:p.Rating %}
+                  {% for i in p.ActRates|rjust:p.ActRates %}
                   <i class="fa fa-star" aria-hidden="true"></i>
                   {% endfor %}
                 </h6>

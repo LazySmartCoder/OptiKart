@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-Blogs | OptiKart
+{{name}} | OptiKart
 {% endblock %}
 {% block body %}
 {% load static %}
@@ -11,7 +11,7 @@ Blogs | OptiKart
         <div id="about" class="w3-content w3-container w3-padding-64" style="max-width: 800px;">
             <h1>{{name}}</h1>
         <hr>
-        <img width="100%" src="http://localhost:8000/static/ProdImages/{{image}}" alt="">
+        <img width="100%" src="http://{{pic}}/static/ProdImages/{{image}}" alt="">
         <br><br>
         {% for i in rating %}
         <i class="fa fa-star" aria-hidden="true"></i>
