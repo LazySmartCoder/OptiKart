@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}
+Customized Spectacle | OptiKart
+{% endblock %}
+{% block body %}
+{% load static %}
+
+
+
+
+<section class="shop_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Your Cart!
+        </h2>
+      </div>
+      <center>
+        <div id="about" class="w3-content w3-container w3-padding-64" style="max-width: 800px;">
+            <h3>Kindly provide your accurate eye number...</h3>
+            <hr>
+            <img src="{% static 'Images/eye.jpg' %}" alt="">
+            <hr>
+            <form action="/add-eye" method="post">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Right</span>
+                    <input name="eye1" required type="text" class="form-control" placeholder="Eye Nmber" aria-label="Username">
+                    <input name="eye2" required type="text" class="form-control" placeholder="Eye Nmber" aria-label="Server">
+                    <span class="input-group-text">Left</span>
+                  </div>
+                </div>
+                <h3>Choose your Underwear...(Itna hi stock hai!)</h3>
+          </center>
+          <div class="row">
+            
+              <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="box">
+                <div>
+                  <div class="img-box">
+                    <img src="{% static 'ProdImages/specs.jpg' %}" alt="">
+                  </div>
+                  <div class="detail-box">
+                      Normal Spectacle
+                    <h6>
+                      ₹499
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+      </div>
+      <div class="btn-box">
+        <button class="btn btn-outline-success" type="submit">
+          Add to Cart
+        </button>
+        {% csrf_token %}
+    </form>
+      </div>
+  </section>
+{% endblock %}

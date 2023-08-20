@@ -62,12 +62,12 @@
                 </div>
                 </form>
                 <br>
-                  <a href="/">Home</a>
                 <a href="/explore">Explore</a>
                 {% if request.user.is_authenticated == False %}
                 <a href="/signin">SignIN</a>
                 <a href="/signup">SignUP</a>
                 {% else %}
+                <a href="/custom">Customized Spectacles</a>
                 <a href="/signout">SignOUT</a>
                 <a href="/userprofile">My Profile</a>
                 <a href="/your-orders">Your Orders</a>
@@ -82,9 +82,16 @@
     </div>
     {% for message in messages %}
 {% if messages %}
-          <div class="alert alert-{{message.tags}}" role="alert">
+          <div class="alert alert-{{message.tags}}" id="noty" role="alert">
             <strong>Message: </strong> {{message}}
           </div>
+          <script>
+            setTimeout(fade_out, 2000);
+
+function fade_out() {
+  $("#noty").fadeOut().empty();
+}
+          </script>
           {% endif %}
 {% endfor %}
   </header>

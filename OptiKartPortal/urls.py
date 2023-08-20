@@ -31,4 +31,6 @@ urlpatterns = [
     path("checkout", views.checkout, name = "Checkout"),
     path("your-orders", views.yourorders, name = "YourOrders"),
     path("search-results", views.search, name = "SearchResults"),
+    path("custom", views.custom, name = "CustomSpecs"),
+    path("add-eye", views.addeye, name = "AddEye"),
 ]

@@ -1,13 +1,8 @@
 # Importing some required packages
 from django.shortcuts import render, redirect
-from OptiKartPortal.models import Product, NewsMail, Blog, CartItem, OrderStatus
+from OptiKartPortal.models import Product, NewsMail, Blog, CartItem, OrderStatus, EyeNumber
 from django.contrib.auth.models import User
 from django.contrib.auth import login, login, authenticate, logout
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.header import Header
-from email.utils import formataddr
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
 import datetime
@@ -90,11 +85,16 @@ def Cart(request):
 def addCart(request, prodname):
     if request.user.is_authenticated:
         prod = Product.objects.get(Name = prodname)
+        if EyeNumber.objects.filter(User = request.user).exists():
+            eye = EyeNumber.objects.get(User = request.user)
+            if prodname == "Normal Eyewear":
+                eye.delete()
         if CartItem.objects.filter(Product = prod, User = request.user).exists():
             cart = CartItem.objects.get(Product = prod, User = request.user)
             cart.delete()
             messages.success(request, "Product Removed from cart.")
         else:
+            if prodname == "Normal Eyewear": return redirect("CustomSpecs")
             creating = CartItem(Product = prod, User=request.user)
             creating.save()
             messages.success(request, "Your product has been added to the Cart.")
@@ -138,7 +138,10 @@ def signupdone(request):
        return redirect("HomePage")
     return redirect("ErrorPage")
 
-def error(request):
+def error(request, exception):
+    return render(request, "error.html")
+
+def ErrorOccured(request):
     return render(request, "error.html")
 
 def signindone(request):
@@ -159,10 +162,9 @@ def forgotpass(request):
     return render(request, "forgot-pass.html")
 
 def signout(request):
-    if request.user:
-        logout(request)
-        return redirect("HomePage")
-    return redirect("ErrorPage")
+    logout(request)
+    messages.success(request, "Get Out.")
+    return redirect("HomePage")
 
 def DeleteAccount(request):
     if request.method == "POST":
@@ -281,3 +283,23 @@ def yourorders(request):
         "pic" : pic,
     }
     return render(request, "your-orders.html", params)
+
+def custom(request):
+    return render(request, "custom.html")
+
+def addeye(request):
+    right = request.POST["eye1"]
+    left = request.POST["eye2"]
+    if EyeNumber.objects.filter(User = request.user).exists():
+        eye = EyeNumber.objects.get(User = request.user)
+        eye.Right = right
+        eye.Left = left
+        eye.User = request.user
+        eye.save()
+        messages.success(request, "Your Eye Number is updated now.")
+    else:
+        creatingEye = EyeNumber(Right = right, Left = left, User = request.user)
+        creatingEye.save()
+        creatingCart = CartItem(Product = Product.objects.get(Name = "Normal Eyewear"), User = request.user)
+        creatingCart.save()
+    return redirect("Cart")

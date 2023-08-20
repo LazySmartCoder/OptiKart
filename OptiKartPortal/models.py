@@ -36,13 +36,21 @@ class Blog(models.Model):
 
 class CartItem(models.Model):
     Product = models.ForeignKey(Product, related_name="Product", on_delete=models.CASCADE)
-    User = models.ForeignKey(User, related_name="UserDetails", on_delete=models.CASCADE, default=1)
+    User = models.ForeignKey(User, related_name="UserDetails", on_delete=models.CASCADE)
     def __str__(self):
         return self.Product.Name
 
 class OrderStatus(models.Model):
     Product = models.ForeignKey(Product, related_name="OrderProduct", on_delete=models.CASCADE)
-    User = models.ForeignKey(User, related_name="OrderUserDetails", on_delete=models.CASCADE, default=1)
+    User = models.ForeignKey(User, related_name="OrderUserDetails", on_delete=models.CASCADE)
+    
     def __str__(self):
         return self.Product.Name
 
+class EyeNumber(models.Model):
+    Right = models.CharField(default="0", max_length=10)
+    Left = models.CharField(default="0", max_length=10)
+    User = models.ForeignKey(User, related_name="UserDetailsNumberEye", on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.User.first_name
