@@ -3,3 +3,4 @@ alter table optikartportal_cartitem rename to OptiKartPortal_cartitem;
 alter table optikartportal_newsmail rename to OptiKartPortal_newsmail;
 alter table optikartportal_orderstatus rename to OptiKartPortal_orderstatus;
 alter table optikartportal_product rename to OptiKartPortal_product;
+alter table optikartportal_eyenumber rename to OptiKartPortal_eyenumber;
